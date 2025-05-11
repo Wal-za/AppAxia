@@ -1,0 +1,71 @@
+{
+    "name": "axia-app",
+    "version": "1.0.0",
+    "main": "electron/main.js",
+    "scripts": {
+        "dev": "concurrently \"npm run dev --prefix frontend\" \"wait-on http://localhost:5173 && electron .\"",
+        "build": "npm run build --prefix frontend",
+        "start": "electron .",
+        "dist": "npm run build && electron-builder"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.0",
+        "electron": "^29.0.0",
+        "electron-builder": "^24.13.3",
+        "wait-on": "^7.0.1"
+    },
+    "dependencies": {
+        "electron-is-dev": "^3.0.1",
+        "pdf-lib": "^1.17.1",
+        "pdf-parse": "^1.1.1",
+        "pdf2table": "^0.0.2",
+        "xlsx": "^0.18.5"
+    },
+    "build": {
+        "appId": "com.axia.app",
+        "productName": "Axia App",
+        "directories": {
+            "output": "dist",
+            "buildResources": "assets"
+        },
+        "files": [
+            {
+                "from": "electron",
+                "to": "electron",
+                "filter": [
+                    "**/*"
+                ]
+            },
+            {
+                "from": "path/to/BMILifeIllustrator_FCL1.exe",
+                "to": "resources",
+                "filter": [
+                    "BMILifeIllustrator_FCL1.exe"
+                ]
+            },
+            {
+                "from": "frontend/dist",
+                "to": "renderer",
+                "filter": [
+                    "**/*"
+                ]
+            },
+            "package.json"
+        ],
+        "win": {
+            "icon": "assets/icon.ico",
+            "target": "portable"
+        },
+        "mac": {
+            "icon": "assets/icon.icns",
+            "target": [
+                "dmg",
+                "zip"
+            ]
+        },
+        "linux": {
+            "icon": "assets/icon.png",
+            "target": "AppImage"
+        }
+    }
+}
